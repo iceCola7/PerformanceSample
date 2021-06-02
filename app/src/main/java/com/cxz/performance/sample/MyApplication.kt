@@ -1,17 +1,18 @@
 package com.cxz.performance.sample
 
 import android.app.Application
-import android.os.Debug
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import com.cxz.performance.sample.alpha.TaskManager
+import com.cxz.performance.sample.task.InitBaiduMapTask
+import com.cxz.performance.sample.task.InitBuglyTask
+import com.cxz.performance.sample.task.InitJPushTask
+import com.cxz.performance.sample.task.InitShareTask
 
 /**
  * @author chenxz
  * @date 2021/6/2
  * @desc
  */
-class MyApplication: Application() {
+class MyApplication : Application() {
 
     //获得当前CPU的核心数
     private val CPU_COUNT = Runtime.getRuntime().availableProcessors()
@@ -44,6 +45,57 @@ class MyApplication: Application() {
 //            e.printStackTrace()
 //        }
 //        Debug.stopMethodTracing()
+
+
+        // 使用启动器的方式
+//        final CountDownLatch latch = new CountDownLatch (1);
+//        ExecutorService executorService = Executors.newFixedThreadPool(CORE_POOL_SIZE);
+//
+//        executorService.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                initBugly();
+//                latch.countDown();
+//            }
+//        });
+//
+//        executorService.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                initBaiduMap();
+//            }
+//        });
+//
+//        executorService.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                initJPushInterface();
+//            }
+//        });
+//        executorService.submit(new Runnable() {
+//            @Override
+//            public void run() {
+//                initShareSDK();
+//            }
+//        });
+//
+//        try {
+//            latch.await();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//            Debug.stopMethodTracing();
+
+        // 使用启动器的方式
+        println("************************MyApplication开始执行************************")
+        val manager: TaskManager = TaskManager.instance
+        manager.add(InitBuglyTask()) // 默认添加，并发处理
+            .add(InitBaiduMapTask()) // 在这里需要先处理了另外一个耗时任务initShareSDK，才能再处理它
+            .add(InitJPushTask()) // 等待主线程处理完毕，再进行执行
+            .add(InitShareTask())
+            .start()
+        manager.startLock()
+        println("************************MyApplication执行完毕************************")
     }
 
 }
