@@ -7,7 +7,13 @@ import com.cxz.performance.sample.alpha.task.TaskRunnable
 import java.util.*
 
 
-class IldeTaskManager {
+class IldeTaskManager private constructor() {
+
+    companion object {
+        val instance: IldeTaskManager by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+            IldeTaskManager()
+        }
+    }
 
     private val ildeTaskQueue: Queue<Task> = LinkedList()
 
