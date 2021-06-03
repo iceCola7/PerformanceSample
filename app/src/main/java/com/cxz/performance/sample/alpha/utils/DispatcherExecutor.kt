@@ -17,7 +17,7 @@ object DispatcherExecutor {
     // We want at least 2 threads and at most 4 threads in the core pool,
     // preferring to have 1 less than the CPU count to avoid saturating
     // the CPU with background work
-    val CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 5))
+    val CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4))
     private val MAXIMUM_POOL_SIZE = CORE_POOL_SIZE
     private const val KEEP_ALIVE_SECONDS = 5L
 
@@ -74,9 +74,7 @@ object DispatcherExecutor {
         init {
             val s = System.getSecurityManager()
             group = if (s != null) s.threadGroup else Thread.currentThread().threadGroup
-            namePrefix = "TaskDispatcherPool-" +
-                    poolNumber.getAndIncrement() +
-                    "-Thread-"
+            namePrefix = "TaskDispatcherPool- ${poolNumber.getAndIncrement()} -Thread-"
         }
 
         override fun newThread(r: Runnable): Thread {

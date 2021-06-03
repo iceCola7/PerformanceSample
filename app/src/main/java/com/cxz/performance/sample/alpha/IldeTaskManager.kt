@@ -20,7 +20,7 @@ class IldeTaskManager private constructor() {
     private val idleHandler = IdleHandler {
         if (ildeTaskQueue.size > 0) {
             // 如果CPU空闲了
-            val idleTask: Task = ildeTaskQueue.poll()
+            val idleTask: Task? = ildeTaskQueue.poll()
             TaskRunnable(idleTask).run()
         }
         // 如果返回false，则移除该 IldeHandler
