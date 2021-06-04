@@ -24,7 +24,7 @@ class IldeTaskManager private constructor() {
             TaskRunnable(idleTask).run()
         }
         // 如果返回false，则移除该 IldeHandler
-        !ildeTaskQueue.isEmpty()
+        ildeTaskQueue.isNotEmpty()
     }
 
     fun addTask(task: Task): IldeTaskManager {

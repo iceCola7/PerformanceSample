@@ -33,11 +33,10 @@ class TaskRunnable : Runnable {
             // 执行Task的尾部任务
             val tailRunnable = task?.getTailRunnable()
             tailRunnable?.run()
+
             if (!it.runOnMainThread()) {
-                if (taskManager != null) {
-                    taskManager?.unLockForChildren(it)
-                    taskManager?.finish(it)
-                }
+                taskManager?.unLockForChildren(it)
+                taskManager?.finish(it)
             }
             TraceCompat.endSection()
         }

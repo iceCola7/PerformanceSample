@@ -42,7 +42,7 @@ class TaskManager private constructor() {
     private val mainNeedWaitCount = AtomicInteger()
     private var mCountDownLatch: CountDownLatch? = null
 
-    private val WAITTIME_TIME = 996 * 31L
+    private val WAITTIME_TIME = 10 * 1000L
     private val futureArray = mutableListOf<Future<*>>()
 
     /**
@@ -68,19 +68,15 @@ class TaskManager private constructor() {
      * 2.在从完成的任务集合里面查询，该task所依赖的类是否已经完成，完成的话进行解锁
      */
     private fun setDependentOfTask(task: Task) {
-        task.dependentArr()?.let {
-            if (it.isNotEmpty()) {
-                for (dependTaskClazz in it) {
-                    if (dependOfTaskArray[dependTaskClazz] == null) {
-                        dependOfTaskArray[dependTaskClazz] = mutableListOf()
-                    }
+        task.dependentArr()?.forEach { dependTaskClazz ->
+            if (dependOfTaskArray[dependTaskClazz] == null) {
+                dependOfTaskArray[dependTaskClazz] = mutableListOf()
+            }
 
-                    // 如果该task所依赖的依赖任务已经加载过了，就解锁其中已经完成的
-                    dependOfTaskArray[dependTaskClazz]?.add(task)
-                    if (taskFinishedArray.contains(dependTaskClazz)) {
-                        task.unlock()
-                    }
-                }
+            // 如果该task所依赖的依赖任务已经加载过了，就解锁其中已经完成的
+            dependOfTaskArray[dependTaskClazz]?.add(task)
+            if (taskFinishedArray.contains(dependTaskClazz)) {
+                task.unlock()
             }
         }
     }
@@ -92,7 +88,7 @@ class TaskManager private constructor() {
     @UiThread
     fun start() {
         if (Looper.getMainLooper() != Looper.myLooper()) {
-            throw RuntimeException("启动器必须要在主线程启动")
+            throw RuntimeException("current thread must be main thread!")
         }
         if (taskAll.isNotEmpty()) {
             // 效率排序
@@ -101,7 +97,10 @@ class TaskManager private constructor() {
 
             // 分发任务
             dispatchTasks()
+            // 运行在主线程
             runOnMainThread()
+
+            startLock()
         }
     }
 
@@ -130,12 +129,13 @@ class TaskManager private constructor() {
     }
 
     @UiThread
-    fun startLock() {
+    private fun startLock() {
         try {
             if (mainNeedWaitCount.get() > 0) {
                 mCountDownLatch?.await(WAITTIME_TIME, TimeUnit.MILLISECONDS)
             }
         } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
     }
 
@@ -153,10 +153,8 @@ class TaskManager private constructor() {
      */
     fun unLockForChildren(task: Task) {
         val arrayList = dependOfTaskArray[task.javaClass]
-        if (arrayList != null && arrayList.size > 0) {
-            for (subTask in arrayList) {
-                subTask.unlock()
-            }
+        arrayList?.forEach { subTask ->
+            subTask.unlock()
         }
     }
 

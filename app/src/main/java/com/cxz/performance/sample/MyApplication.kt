@@ -88,13 +88,12 @@ class MyApplication : Application() {
 
         // 使用启动器的方式
         println("************************MyApplication开始执行************************")
-        val manager: TaskManager = TaskManager.instance
-        manager.add(InitBuglyTask()) // 默认添加，并发处理
+        TaskManager.instance
+            .add(InitBuglyTask()) // 默认添加，并发处理
             .add(InitBaiduMapTask()) // 在这里需要先处理了另外一个耗时任务initShareSDK，才能再处理它
             .add(InitJPushTask()) // 等待主线程处理完毕，再进行执行
             .add(InitShareTask())
             .start()
-        manager.startLock()
         println("************************MyApplication执行完毕************************")
     }
 
