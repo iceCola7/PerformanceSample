@@ -1,4 +1,4 @@
 # PerformanceSample
 
-![](picture/app_performance.jpg)
+![](picture/asynchronous.jpg)
  
