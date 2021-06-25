@@ -1,7 +1,7 @@
 package com.cxz.performance.sample.task
 
-import com.cxz.performance.sample.alpha.task.ITask
-import com.cxz.performance.sample.alpha.task.Task
+import io.github.icecola7.lib_alpha.task.ITask
+import io.github.icecola7.lib_alpha.task.Task
 
 /**
  * @author chenxz

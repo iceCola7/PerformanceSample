@@ -1,11 +1,11 @@
 package com.cxz.performance.sample
 
 import android.app.Application
-import com.cxz.performance.sample.alpha.TaskManager
 import com.cxz.performance.sample.task.InitBaiduMapTask
 import com.cxz.performance.sample.task.InitBuglyTask
 import com.cxz.performance.sample.task.InitJPushTask
 import com.cxz.performance.sample.task.InitShareTask
+import io.github.icecola7.lib_alpha.TaskManager
 
 /**
  * @author chenxz
