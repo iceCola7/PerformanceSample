@@ -1,2 +1,3 @@
 rootProject.name = "PerformanceSample"
 include ':app'
+include ':lib_alpha'
