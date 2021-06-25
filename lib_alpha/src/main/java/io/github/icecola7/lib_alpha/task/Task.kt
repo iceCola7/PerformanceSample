@@ -1,14 +1,14 @@
-package com.cxz.performance.sample.alpha.task
+package io.github.icecola7.lib_alpha.task
 
 import android.os.Process
-import com.cxz.performance.sample.alpha.utils.DispatcherExecutor
+import io.github.icecola7.lib_alpha.utils.DispatcherExecutor
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutorService
 
 /**
  * @author chenxz
  * @date 2021/6/2
- * @desc
+ * @desc Task
  */
 abstract class Task : ITask {
 

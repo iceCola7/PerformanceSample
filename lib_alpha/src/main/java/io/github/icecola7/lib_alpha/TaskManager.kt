@@ -1,11 +1,11 @@
-package com.cxz.performance.sample.alpha
+package io.github.icecola7.lib_alpha
 
 import android.os.Looper
 import androidx.annotation.UiThread
-import com.cxz.performance.sample.alpha.sort.TaskSortUtil
-import com.cxz.performance.sample.alpha.task.ITask
-import com.cxz.performance.sample.alpha.task.Task
-import com.cxz.performance.sample.alpha.task.TaskRunnable
+import io.github.icecola7.lib_alpha.sort.TaskSortUtil
+import io.github.icecola7.lib_alpha.task.ITask
+import io.github.icecola7.lib_alpha.task.Task
+import io.github.icecola7.lib_alpha.task.TaskRunnable
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Future

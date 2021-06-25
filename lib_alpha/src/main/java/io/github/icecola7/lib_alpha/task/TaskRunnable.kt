@@ -1,8 +1,8 @@
-package com.cxz.performance.sample.alpha.task
+package io.github.icecola7.lib_alpha.task
 
 import android.os.Process
 import androidx.core.os.TraceCompat
-import com.cxz.performance.sample.alpha.TaskManager
+import io.github.icecola7.lib_alpha.TaskManager
 
 /**
  * @author chenxz

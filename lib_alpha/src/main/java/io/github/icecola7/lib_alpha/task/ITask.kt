@@ -1,14 +1,13 @@
-package com.cxz.performance.sample.alpha.task
+package io.github.icecola7.lib_alpha.task
 
 import android.os.Process
 import androidx.annotation.IntRange
-import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
 /**
  * @author chenxz
  * @date 2021/6/2
- * @desc
+ * @desc ITask
  */
 interface ITask {
 
@@ -18,6 +17,9 @@ interface ITask {
     @IntRange(from = Process.THREAD_PRIORITY_FOREGROUND.toLong(), to = Process.THREAD_PRIORITY_LOWEST.toLong())
     fun priority(): Int
 
+    /**
+     * Task执行
+     */
     fun run()
 
     /**

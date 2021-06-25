@@ -1,13 +1,13 @@
-package com.cxz.performance.sample.alpha.sort
+package io.github.icecola7.lib_alpha.sort
 
 import android.util.ArraySet
-import com.cxz.performance.sample.alpha.task.Task
+import io.github.icecola7.lib_alpha.task.Task
 
 object TaskSortUtil {
 
     private val taskArrayList = mutableListOf<Task>()
 
-    fun getTasksHigh(): MutableList<Task> {
+    fun getTaskList(): MutableList<Task> {
         return taskArrayList
     }
 
@@ -18,7 +18,7 @@ object TaskSortUtil {
      */
     @Synchronized
     fun getSortResult(originTasks: MutableList<Task>, clsLaunchTasks: MutableList<Class<out Task>>): MutableList<Task> {
-        val dependSet = ArraySet<Int>()
+        val dependSet = HashSet<Int>()
         val graph = Graph(originTasks.size)
         for (i in originTasks.indices) {
             val task = originTasks[i]

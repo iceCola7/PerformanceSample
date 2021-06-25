@@ -1,4 +1,4 @@
-package com.cxz.performance.sample.alpha.utils
+package io.github.icecola7.lib_alpha.utils
 
 import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * @author chenxz
  * @date 2021/6/2
- * @desc
+ * @desc 线程池
  */
 object DispatcherExecutor {
 
@@ -40,7 +40,6 @@ object DispatcherExecutor {
         sCPUThreadPoolExecutor.allowCoreThreadTimeOut(true)
         sIOThreadPoolExecutor = Executors.newCachedThreadPool(sThreadFactory)
     }
-
 
     /**
      * 获取CPU线程池
@@ -88,5 +87,4 @@ object DispatcherExecutor {
             return t
         }
     }
-
 }

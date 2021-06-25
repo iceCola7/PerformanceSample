@@ -1,4 +1,4 @@
-package com.cxz.performance.sample.alpha.sort
+package io.github.icecola7.lib_alpha.sort
 
 import java.util.*
 
