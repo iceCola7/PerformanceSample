@@ -1,6 +1,7 @@
 package com.cxz.performance.sample
 
 import android.app.Application
+import android.os.StrictMode
 import com.cxz.performance.sample.task.InitBaiduMapTask
 import com.cxz.performance.sample.task.InitBuglyTask
 import com.cxz.performance.sample.task.InitJPushTask
@@ -95,6 +96,31 @@ class MyApplication : Application() {
             .add(InitShareTask())
             .start()
         println("************************MyApplication执行完毕************************")
+    }
+
+    /**
+     * 卡顿优化检测
+     */
+    private fun initStrictMode() {
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder()
+                .detectCustomSlowCalls()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork() // or .detectAll()
+                .penaltyLog() // 在Logcat中打印违规异常信息
+                .build()
+        )
+
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectActivityLeaks()
+                .setClassInstanceLimit(MyApplication::class.java, 1)
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .build()
+        )
     }
 
 }
